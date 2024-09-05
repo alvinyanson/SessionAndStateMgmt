@@ -16,6 +16,7 @@ builder.Services.AddAuthentication(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 
 
 
