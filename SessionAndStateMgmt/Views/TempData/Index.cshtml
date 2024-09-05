@@ -1,7 +1,7 @@
-﻿@model CommentForm 
+﻿@model CommentForm
 
 
-<form method="POST">
+<form method="POST" class="mb-5">
     <div class="mb-3">
         <label class="form-label">Name</label>
         <input asp-for="Name" type="text" class="form-control">
@@ -17,11 +17,23 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-@if (TempData["SuccessMsg"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        <p>@TempData["SuccessMsg"]</p>
-    </div>
+@{
+    if (TempData["SuccessMsg"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <p>@TempData["SuccessMsg"]</p>
+        </div>
+    }
+
+
+    // if (TempData.Peek("SuccessMsg") != null)
+    // {
+    //     <div class="alert alert-success" role="alert">
+    //         <p>@TempData.Peek("SuccessMsg")</p>
+    //     </div>
+    // }
+
+    // TempData.Keep("SuccessMsg");
 }
 
 @section Scripts {
