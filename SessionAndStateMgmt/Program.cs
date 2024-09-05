@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Logging;
+using SessionAndStateMgmt.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Add services to the container.
+builder.Services.AddTransient<HttpContextItemsMiddleware>();
 builder.Services.AddControllersWithViews();
 //builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 
@@ -35,6 +38,8 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+ILogger logger = app.Logger;
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -47,6 +52,17 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.UseSession();
+
+
+app.UseHttpContextItemsMiddleware();
+
+app.Use(async (context, next) =>
+{
+    // context.Items["isVerified"] is true
+    logger.LogInformation($"Next: Verified: {context.Items["isVerified"]}");
+    await next.Invoke();
+});
+
 
 app.MapControllerRoute(
     name: "default",
