@@ -26,7 +26,6 @@ namespace SessionAndStateMgmt.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Secret()
         {
             var user = HttpContext.User;

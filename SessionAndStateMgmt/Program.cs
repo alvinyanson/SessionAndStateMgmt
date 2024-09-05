@@ -17,6 +17,21 @@ builder.Services.AddAuthentication(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+
+// CONFIGURE SESSION
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "Alvin.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +44,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
