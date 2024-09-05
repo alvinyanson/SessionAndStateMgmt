@@ -1,0 +1,31 @@
+﻿@model CommentForm 
+
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" type="text" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Comment</label>
+        <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@if (TempData["SuccessMsg"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <p>@TempData["SuccessMsg"]</p>
+    </div>
+}
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
